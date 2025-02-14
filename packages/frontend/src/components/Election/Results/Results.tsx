@@ -14,7 +14,7 @@ import DetailExpander from "./components/DetailExpander";
 import ResultsTable from "./components/ResultsTable";
 import Widget from "./components/Widget";
 import WidgetContainer from "./components/WidgetContainer";
-import ResultsBarChart from "./components/ResultsBarChart";
+import ResultsBarChart, { ResultsBarChartType } from "./components/ResultsBarChart";
 import HeadToHeadWidget from "./components/HeadToHeadWidget";
 import useRace, { RaceContextProvider } from "~/components/RaceContextProvider";
 import VoterProfileWidget from "./components/VoterProfileWidget";
@@ -59,7 +59,7 @@ function STARResultsViewer({ filterRandomFromLogs }: {filterRandomFromLogs: bool
               <STARResultDetailedStepsWidget results={results} rounds={rounds} t={t} filterRandomFromLogs={filterRandomFromLogs}/>
             </Widget>
             <Widget title={t('results.star.equal_preferences_title')}>
-              <ResultsBarChart data={noPrefStarData.reverse()} xKey='count' percentage={true} sortFunc={false}/>
+              <ResultsBarChart data={noPrefStarData.reverse()} xKey='count' percentage={true} sortFunc={false} resultsBarChartType={ResultsBarChartType.EqualPreference}/>
             </Widget>
             <HeadToHeadWidget candidates={sortedCandidates}/>
             <VoterProfileWidget candidates={sortedCandidates} topScore={5} frontRunners={sortedCandidates.slice(0, 2) as [Candidate, Candidate]}/>

@@ -1,6 +1,10 @@
 import { Bar, Cell, ComposedChart, LabelList, Legend, Line, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { CHART_COLORS, truncName } from "~/components/util";
 
+export enum ResultsBarChartType {
+  EqualPreference = "equalPreference",  
+}
+
 export default ({
   data,
   runoff = false,
@@ -14,6 +18,7 @@ export default ({
   majorityOffset = false,
   height = undefined,
   maxBarSize = undefined, // graph will be scaled to fit a bar of size barS
+  resultsBarChartType = undefined
 }) => {
   let rawData = data;
 
@@ -114,7 +119,9 @@ export default ({
       15 * (longestCandidateName.length > 20 ? 20 : longestCandidateName.length)
     )
   );
-
+  const useTickMargin = resultsBarChartType === ResultsBarChartType.EqualPreference && rawData.every(d => d[xKey] === 0);
+  const tickOffset = 40; 
+  const adjustedAxisWidth = useTickMargin ? axisWidth + tickOffset : axisWidth;
   return (
     <ResponsiveContainer width="90%" height={50 * data.length} style={maxBarSize ?
       {marginTop: '-50px'}: {}
@@ -127,7 +134,9 @@ export default ({
           axisLine={false}
           tickLine={false}
           tick={{ fontSize: ".9rem", fill: "black", fontWeight: "bold" }}
-          width={axisWidth}
+          width={adjustedAxisWidth}
+          tickMargin={useTickMargin ? tickOffset : undefined}
+          
         />
         <Bar
           dataKey={xKey}
