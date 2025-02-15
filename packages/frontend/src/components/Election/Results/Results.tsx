@@ -14,7 +14,7 @@ import DetailExpander from "./components/DetailExpander";
 import ResultsTable from "./components/ResultsTable";
 import Widget from "./components/Widget";
 import WidgetContainer from "./components/WidgetContainer";
-import ResultsBarChart, { ResultsBarChartType } from "./components/ResultsBarChart";
+import ResultsBarChart from "./components/ResultsBarChart";
 import HeadToHeadWidget from "./components/HeadToHeadWidget";
 import useRace, { RaceContextProvider } from "~/components/RaceContextProvider";
 import VoterProfileWidget from "./components/VoterProfileWidget";
