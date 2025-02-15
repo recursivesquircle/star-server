@@ -1,5 +1,5 @@
 import useElection from "~/components/ElectionContextProvider";
-import ResultsBarChart from "../components/ResultsBarChart"
+import ResultsBarChart, { ResultsBarChartType } from "../components/ResultsBarChart"
 import Widget from "../components/Widget"
 import useAnonymizedBallots from "~/components/AnonymizedBallotsContextProvider";
 import { Candidate } from "@equal-vote/star-vote-shared/domain_model/Candidate";
@@ -18,6 +18,11 @@ export default ({frontRunners}: {frontRunners: Candidate[]}) => {
     })
 
     return <Widget title={t('results.star.equal_preferences_title')}>
-        <ResultsBarChart data={equalPreferences.map((count, i) => ({name: `${i}⭐`, count})).reverse()} xKey='count' percentage={true} sortFunc={false}/>
+        <ResultsBarChart
+            data={equalPreferences.map((count, i) => ({name: `${i}⭐`, count})).reverse()}
+            xKey='count' percentage={true} 
+            sortFunc={false} 
+            resultsBarChartType={ResultsBarChartType.EqualPreference}
+        />
     </Widget>
 }
