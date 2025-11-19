@@ -23,11 +23,11 @@ const className = "VoterRolls.Controllers";
 const addElectionRoll = async (req: IElectionRequest & { body: { electionRoll: ElectionRollInput[] } }, res: Response, next: NextFunction) => {
     expectPermission(req.user_auth.roles, permissions.canAddToElectionRoll)
     Logger.info(req, `${className}.addElectionRoll ${req.election.election_id}`);
-    const history = [{
+    const historyEntry = {
         action_type: 'added',
-        actor: req.user.email,
+        actor: req.user?.email,
         timestamp: Date.now(),
-    }]
+    };
     
     // Generate all IDs in parallel first
     const idPromises: Promise<string>[] = req.body.electionRoll.map((rollInput: ElectionRollInput) => 
@@ -47,7 +47,7 @@ const addElectionRoll = async (req: IElectionRequest & { body: { electionRoll: E
         submitted: false,
         precinct: rollInput.precinct,
         state: rollInput.state || ElectionRollState.approved,
-        history: history,
+        history: [{ ...historyEntry }],
         create_date: new Date().toISOString(),
         update_date: Date.now().toString(),
         head: true
