@@ -20,14 +20,14 @@ const useFetch = <Message, Response>(url: string, method: 'get' | 'post' | 'put'
     const { setSnack } = useSnackbar()
 
     const makeRequest = async (data?: Message) => {
-        const options = {
-            method: method,
+        const options: RequestInit = {
+            method,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data)
-        }
+            ...(method !== 'get' && data !== undefined ? { body: JSON.stringify(data) } : {})
+        };
         setIsPending(true);
         try {
             const res = await fetch(url, options)
